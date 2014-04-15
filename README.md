@@ -1,4 +1,4 @@
-ninja-arduino
+ollo-arduino
 =============
 
-Ninja Block client driver to communicate with arduino cape
+Ollo arduino driver
