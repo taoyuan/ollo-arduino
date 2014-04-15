@@ -27,8 +27,8 @@ const kArduinoUpdatedFile = "/etc/opt/ninja/.has_updated_arduino";
  */
 function platform(opts, app, version) {
 
-	var str = undefined
-	var mod = this
+	var str = undefined;
+	var mod = this;
 
 	this.retry = {
 
@@ -54,6 +54,7 @@ function platform(opts, app, version) {
 	this.flashScriptPath = "/opt/utilities/bin/ninja_update_arduino"
 	this.flashScriptProcess = undefined;
 	this.debounce = [ ];
+    this.opened = undefined;
 	
 	if ( process.env.NINJA_HARDWARE_TYPE == "RPI" ) {
 		this.flashScriptPath = "/opt/ninjablocks/bin/ninja_update_arduino";
@@ -133,6 +134,8 @@ function platform(opts, app, version) {
 
 	this.once('open', function() {
 
+        mod.opened = true;
+
 		var versionSpam = setInterval(function() {
 
 			getVersion();
@@ -148,6 +151,8 @@ function platform(opts, app, version) {
 
 			clearTimeout(versionSpam);
 		}, 2000);
+
+        mod.updateLEDWithStatus();
 	});
 
 	//app.on('device::command', mod.onCommand.bind(mod));
@@ -162,7 +167,7 @@ deviceStream(platform);
 metaEvents(platform);
 
 platform.prototype.updateLEDWithStatus = function() {
-	if(!this.device || (this.flashStatus != this.FlashStatusType.NONE)) { return; }
+	if(!this.opened || !this.device || (this.flashStatus != this.FlashStatusType.NONE)) { return; }
 	this.device.write(JSON.stringify({
 		DEVICE : [
 			{
