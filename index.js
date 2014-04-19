@@ -98,18 +98,18 @@ function platform(opts, app, version) {
 
 	if((!app.opts.devicePath) && app.opts.env == "production") {
 
-		this.app.opts.devicePath = "/dev/ttyO1";
+		this.app.opts.devicePath = "usb|ttyACM*|ttyS0";
 	}
 	// don't bother if neither are specified
 	if(!app.opts.devicePath && !app.opts.deviceHost) {
 
-		return this.log.info("ninja-arduino: No device specified");
+		return this.log.info("No device specified");
 	}
 	else {
 
 		if(!this.createStream(this.app.opts)) {
 
-			this.log.error("ninja-arduino: Error creating device stream");
+			this.log.error("Error creating device stream");
 		}
 	}
 
@@ -229,7 +229,7 @@ platform.prototype.setArduinoHexURLToDownload = function(hexURL) {
 }
 
 platform.prototype.requestFlashArduino = function() {
-	this.log.info('ninja-arduino: flash arduino requested');
+	this.log.info('flash arduino requested');
 	this.device.write(JSON.stringify({
 		DEVICE : [{
 				G : "0"
@@ -251,7 +251,7 @@ platform.prototype.flashArduino = function() {
 		this.flashStatus = this.FlashStatusType.NONE;
 		return;
 	}
-	this.log.info('ninja-arduino: flashing using params, \'' + params + '\'');
+	this.log.info('flashing using params, \'' + params + '\'');
 
 	//flash here
 	this.flashStatus = this.FlashStatusType.FLASHING;
@@ -264,14 +264,14 @@ platform.prototype.flashArduino = function() {
         		console.log(err);
     		} else {
 			fs.unlink(kArduinoUpdatedFile, function (err) { //delete file to trigger update on next run
-				self.log.info('ninja-arduino: flashing arduino...');
+				self.log.info('flashing arduino...');
 				process.exit(); //restart so /etc/init/ninjablock.conf can run
 			});
 		}
 	});*/
 }
 platform.prototype.finishedFlashing = function(code) {
-	this.log.info('ninja-arduino: finished flashing (' + code + ')');
+	this.log.info('finished flashing (' + code + ')');
 	this.flashStatus = this.FlashStatusType.NONE;
 	this.createStream();
 }
