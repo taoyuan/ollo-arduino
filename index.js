@@ -98,7 +98,7 @@ function platform(opts, app, version) {
 
 	if((!app.opts.devicePath) && app.opts.env == "production") {
 
-		this.app.opts.devicePath = "usb|ttyACM*|ttyS0";
+		this.app.opts.devicePath = "usb|ttyAMA*|ttyO1";
 	}
 	// don't bother if neither are specified
 	if(!app.opts.devicePath && !app.opts.deviceHost) {
