@@ -156,7 +156,7 @@ function platform(opts, app, version) {
 	});
 
 	//app.on('device::command', mod.onCommand.bind(mod));
-	app.on('client::up', mod.restorePersistantDevices.bind(mod));
+	app.on('client::up', mod.restorePersistentDevices.bind(mod));
 
 };
 
@@ -194,7 +194,7 @@ platform.prototype.config = function(rpc,cb) {
 };
 
 
-platform.prototype.restorePersistantDevices = function() {
+platform.prototype.restorePersistentDevices = function() {
 	var persistantDevices = this.opts.persistantDevices;
 
 
