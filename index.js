@@ -195,17 +195,17 @@ platform.prototype.config = function(rpc,cb) {
 
 
 platform.prototype.restorePersistentDevices = function() {
-	var persistantDevices = this.opts.persistantDevices;
+	var persistentDevices = this.opts.persistentDevices;
 
 
-	if (!persistantDevices) {
+	if (!persistentDevices) {
 		return;
 	}
 
-	var persistantGuid;
-	persistantDevices.forEach(function(persistantGuid){
+	var persistentGuid;
+	persistentDevices.forEach(function(persistentGuid){
 
-		deviceAttributes = persistantGuid.split('_');
+		deviceAttributes = persistentGuid.split('_');
 		if (deviceAttributes.length < 3) {
 			return;
 		}
